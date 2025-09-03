@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+  use App\Models\kegiatan\usulanKegiatan;
 
 class User extends Authenticatable
 {
@@ -17,10 +18,13 @@ class User extends Authenticatable
    * @var array<int, string>
    */
   protected $fillable = [
-    'name',
+    'username',
     'email',
     'password',
+    'role_id',
+    'prodi_id'
   ];
+
 
   /**
    * The attributes that should be hidden for serialization.
@@ -44,4 +48,18 @@ class User extends Authenticatable
       'password' => 'hashed',
     ];
   }
+
+  public function role(){
+    return $this->belongsTo(role::class, 'prodi_id');
+  }
+
+  public function prodi(){
+    return $this->belongsTo(prodi::class, 'prodi_id');
+  }
+
+  public function usulanKegiatan(){
+    return $this->hasMany(usulanKegiatan::class, 'user_id');
+  }
+
+
 }

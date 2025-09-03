@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\dashboard\Analytics;
 use App\Http\Controllers\layouts\WithoutMenu;
 use App\Http\Controllers\layouts\WithoutNavbar;
@@ -42,10 +43,19 @@ use App\Http\Controllers\form_elements\BasicInput;
 use App\Http\Controllers\form_elements\InputGroups;
 use App\Http\Controllers\form_layouts\VerticalForm;
 use App\Http\Controllers\form_layouts\HorizontalForm;
+use App\Http\Controllers\kegiatan\Laporan;
+use App\Http\Controllers\kegiatan\Pendanaan;
+use App\Http\Controllers\kegiatan\Proposal;
+use App\Http\Controllers\kegiatan\Riwayat;
+use App\Http\Controllers\kegiatan\Usulan;
 use App\Http\Controllers\tables\Basic as TablesBasic;
+use App\Http\Controllers\AuthController;
+
 
 // Main Page Route
-Route::get('/', [Analytics::class, 'index'])->name('dashboard-analytics');
+Route::get('/', fn() => redirect()->route('login'))
+    ->middleware('guest');
+
 
 // layout
 Route::get('/layouts/without-menu', [WithoutMenu::class, 'index'])->name('layouts-without-menu');
@@ -62,9 +72,39 @@ Route::get('/pages/misc-error', [MiscError::class, 'index'])->name('pages-misc-e
 Route::get('/pages/misc-under-maintenance', [MiscUnderMaintenance::class, 'index'])->name('pages-misc-under-maintenance');
 
 // authentication
-Route::get('/auth/login-basic', [LoginBasic::class, 'index'])->name('auth-login-basic');
-Route::get('/auth/register-basic', [RegisterBasic::class, 'index'])->name('auth-register-basic');
-Route::get('/auth/forgot-password-basic', [ForgotPasswordBasic::class, 'index'])->name('auth-reset-password-basic');
+
+
+
+//login feature
+Route::middleware('guest')->group(function(){
+  route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+  route::post('/login', [AuthController::class, 'login']);
+
+  //forgot password
+  Route::get('/forgot-password', [AuthController::class, 'showForgotPasswordForm'])->name('password.request');
+  Route::post('/forgot-password', [AuthController::class, 'sendResetLink'])->name('password.email');
+});
+
+Route::middleware('auth')->group(function () {
+  Route::get('/dashboard', function () {
+    dd([
+    'username' => Auth::user()->username ?? Auth::user()->email,
+    'password' => Auth::user()->password,
+    'role_id' => \App\Models\Role::where('id', Auth::user()->role_id)->value('id'),
+    'role_nama' => \App\Models\Role::where('id', Auth::user()->role_id)->value('nama_role')
+]);
+        return view('content.dashboard.dashboards-himpunan');
+    });
+
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+});
+
+
+
+
+
+
+
 
 // cards
 Route::get('/cards/basic', [CardBasic::class, 'index'])->name('cards-basic');
@@ -110,3 +150,8 @@ Route::get('/tables/basic', [TablesBasic::class, 'index'])->name('tables-basic')
 
 
 // Kegitatan Mahasiswa
+Route::get('/kegiatan/riwayat', [Riwayat::class, 'index'])->name('kegiatan-Riwayat');
+Route::get('/kegiatan/usulan', [Usulan::class, 'index'])->name('kegiatan-Usulan');
+Route::get('/kegiatan/proposal', [Proposal::class, 'index'])->name('kegiatan-Proposal');
+Route::get('/kegiatan/pendanaan', [Pendanaan::class, 'index'])->name('kegiatan-Pendanaan');
+Route::get('/kegiatan/laporan', [Laporan::class, 'index'])->name('kegiatan-Laporan');

@@ -10,6 +10,42 @@
       "menuHeader": "Kegiatan"
     },
     {
+      "name": "Kegiatan",
+      "icon": "menu-icon tf-icons bx bx-layout",
+      "slug": "kegiatan",
+      "alwaysOpen": true,
+      "submenu": [
+        {
+          "url": "kegiatan/riwayat",
+          "name": "Riyawat Kegiatan",
+          "slug": "kegiatan-Riwayat"
+        },
+        {
+          "url": "kegiatan/usulan",
+          "name": "Usulan kegiatan",
+          "slug": "kegiatan-Usulan"
+        },
+        {
+          "url": "kegiatan/proposal",
+          "name": "Proposal Kegiatan",
+          "slug": "kegiatan-Proposal"
+        },
+        {
+          "url": "kegiatan/pendanaan",
+          "name": "Pendanaan",
+          "slug": "kegiatan-Pendanaan"
+        },
+        {
+          "url": "kegiatan/laporan",
+          "name": "Laporan",
+          "slug": "kegiatan-Laporan"
+        }
+      ]
+    },
+    {
+      "menuHeader": "Layouts"
+    },
+    {
       "name": "Layouts",
       "icon": "menu-icon tf-icons bx bx-layout",
       "slug": "layouts",
