@@ -17,21 +17,24 @@ class UserSeeder extends Seeder
             'username' => 'Johanda',
             'email' => 'johanda201@gmail.com',
             'password' => 'pass',
-            'role_id' => '4'
+            'role_id' => '4',
+            'prodi_id' => '1'
         ]);
 
         User::factory()->create([
             'username' => 'Doni',
             'email' => 'doni@gmail.com',
             'password' => 'pass',
-            'role_id' => '3'
+            'role_id' => '3',
+            'prodi_id' => '1'
         ]);
 
         User::factory()->create([
             'username' => 'ihsan',
             'email' => 'ihsan@gmail.com',
             'password' => 'pass',
-            'role_id' => '2'
+            'role_id' => '2',
+            'prodi_id' => '1'
         ]);
 
         User::factory()->create([

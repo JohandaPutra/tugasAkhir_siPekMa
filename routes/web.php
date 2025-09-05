@@ -50,6 +50,8 @@ use App\Http\Controllers\kegiatan\Riwayat;
 use App\Http\Controllers\kegiatan\Usulan;
 use App\Http\Controllers\tables\Basic as TablesBasic;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\usulanKegiatanController;
+
 
 
 // Main Page Route
@@ -87,12 +89,12 @@ Route::middleware('guest')->group(function(){
 
 Route::middleware('auth')->group(function () {
   Route::get('/dashboard', function () {
-    dd([
-    'username' => Auth::user()->username ?? Auth::user()->email,
-    'password' => Auth::user()->password,
-    'role_id' => \App\Models\Role::where('id', Auth::user()->role_id)->value('id'),
-    'role_nama' => \App\Models\Role::where('id', Auth::user()->role_id)->value('nama_role')
-]);
+//     dd([
+//     'username' => Auth::user()->username ?? Auth::user()->email,
+//     'password' => Auth::user()->password,
+//     'role_id' => \App\Models\Role::where('id', Auth::user()->role_id)->value('id'),
+//     'role_nama' => \App\Models\Role::where('id', Auth::user()->role_id)->value('nama_role')
+// ]);
         return view('content.dashboard.dashboards-himpunan');
     });
 
@@ -151,7 +153,8 @@ Route::get('/tables/basic', [TablesBasic::class, 'index'])->name('tables-basic')
 
 // Kegitatan Mahasiswa
 Route::get('/kegiatan/riwayat', [Riwayat::class, 'index'])->name('kegiatan-Riwayat');
-Route::get('/kegiatan/usulan', [Usulan::class, 'index'])->name('kegiatan-Usulan');
+// Route::get('/kegiatan/usulan', [Usulan::class, 'index'])->name('kegiatan-Usulan');
+Route::get('/kegiatan/usulan', [UsulanKegiatanController::class, 'index'])->name('kegiatan-Usulan');
 Route::get('/kegiatan/proposal', [Proposal::class, 'index'])->name('kegiatan-Proposal');
 Route::get('/kegiatan/pendanaan', [Pendanaan::class, 'index'])->name('kegiatan-Pendanaan');
 Route::get('/kegiatan/laporan', [Laporan::class, 'index'])->name('kegiatan-Laporan');

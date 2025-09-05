@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\jenisKegiatan;
+use App\Models\jenisPendanaan;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -15,7 +17,13 @@ class DatabaseSeeder extends Seeder
   {
    $this->call([
           RoleSeeder::class,
-          UserSeeder::class
+          fakultasSeeder::class,
+          ProdiSeeder::class,
+          jenisKegiatanSeeder::class,
+          jenisPendanaanSeeder::class,
+          UserSeeder::class,
+          statusKegiatanSeeder::class,
+          usulanKegiatanSeeder::class,
         ]);
 
   }
